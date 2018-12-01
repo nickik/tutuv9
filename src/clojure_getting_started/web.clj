@@ -17,6 +17,12 @@
    :body (str (if (nil? @alarm) 204 200))
     })
 
+(defn get-button []
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body (str "<html><head><title>Luxeria tutu</title></head> <body> <form method='POST' src='/'> <input type='submit' value='RING!'> </form> </body></html>")
+   })
+
 (add-watch alarm :watcher
            (fn [_ _ _ new-state]
              (when new-state
@@ -31,8 +37,10 @@
 
 (defroutes app
   (GET "/" []
+    (get-button))
+  (GET "/check" []
     (read-alarm))
-  (POST "/" [] (set-alarm) (read-alarm))
+  (POST "/" [] (set-alarm) (get-button))
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
 
