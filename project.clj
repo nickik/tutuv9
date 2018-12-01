@@ -1,4 +1,4 @@
-(defproject clojure-getting-started "1.0.0-SNAPSHOT"
+(defproject tutuv9 "1.0.0-SNAPSHOT"
   :description "Demo Clojure web app"
   :url "http://clojure-getting-started.herokuapp.com"
   :license {:name "Eclipse Public License v1.0"
@@ -12,6 +12,6 @@
   :min-lein-version "2.0.0"
   :plugins [[environ/environ.lein "0.3.1"]]
   :hooks [environ.leiningen.hooks]
-  :main clojure-getting-started.web/-main
-  :uberjar-name "clojure-getting-started-standalone.jar"
+  :main tutuv9/-main
+  :uberjar-name "tutuv9-standalone.jar"
   :profiles {:production {:env {:production true}}})
