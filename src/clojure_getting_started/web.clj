@@ -4,20 +4,30 @@
             [compojure.route :as route]
             [clojure.java.io :as io]
             [ring.adapter.jetty :as jetty]
-            [environ.core :refer [env]])
-  (:import (org.joda.time DateTime)
-           (org.joda.time.format ISODateTimeFormat)))
+            [environ.core :refer [env]]
+            [clojure.core.async :as async :refer [thread]]
+            [clojure.tools.logging :as log])
+  (:import (org.joda.time DateTime)))
 
-(def alarm (atom (DateTime.)))
+(def alarm (atom nil))
 
 (defn read-alarm []
-  {:status 200
+  {:status (if (nil? @alarm) 204 200)
    :headers {"Content-Type" "text/plain"}
-   :body
-    (str (. (ISODateTimeFormat/dateTime) print @alarm))})
+   :body (str (if (nil? @alarm) 204 200))
+    })
+
+(add-watch alarm :watcher
+           (fn [_ _ _ new-state]
+             (when new-state
+               (log/info "Alarm request sent at " (str new-state)))))
 
 (defn set-alarm []
-  (reset! alarm (DateTime.)))
+  (let [dt (DateTime.)]
+    (reset! alarm dt)
+    (async/thread
+      (Thread/sleep 5000)
+      (compare-and-set! alarm dt nil))))
 
 (defroutes app
   (GET "/" []
