@@ -20,7 +20,7 @@
 (defn get-button []
   {:status 200
    :headers {"Content-Type" "text/html"}
-   :body (str "<html><head><title>Luxeria tutu</title></head> <body> <form method='POST' src='/'> <input type='submit' value='RING!'> </form> </body></html>")
+   :body (str "<html><head><title>Luxeria tutu</title></head><body><form method='POST' src='/'><input type=\"submit\" value=\"RING!\" style=\"width:100%; height: 300px;background-color: #f44336;\"></form></body></html>")
    })
 
 (add-watch alarm :watcher
