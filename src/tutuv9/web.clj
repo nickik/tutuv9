@@ -11,9 +11,9 @@
 (def alarm (atom #{}))
 
 (defn read-alarm [alarm-name]
-  {:status (if (some #{alarm-name} @alarm) 204 200)
+  {:status (if (some #{alarm-name} @alarm) 200 204)
    :headers {"Content-Type" "text/plain"}
-   :body (str (if (some #{alarm-name} @alarm) 204 200))})
+   :body (str (if (some #{alarm-name} @alarm) 200 204))})
 
 (defn get-button [name]
   {:status 200
